@@ -34,7 +34,7 @@ int absNumber(int a, int b) {
 void solve(int *a, int n) {
     int min = abs(a[0] - a[1]);
 
-    for (int i = 0; i < n - 1; i++) 
+    for (int i = 1; i < n - 1; i++) 
         min = minNumber(min, absNumber(a[i], a[i+1]));
 
     printf("%d", min);
