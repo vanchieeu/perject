@@ -1,42 +1,38 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <math.h>
 
-void swap(int *a, int *b) {
-    int temp = *a;
-    *a = *b;
-    *b = temp;
+void quickSort(int a[], int l, int r){
+	int p = a[(l+r)/2];
+	int i = l, j = r;
+	while (i < j){
+		while (a[i] < p){
+			i++;
+		}
+		while (a[j] > p){
+			j--;
+		}
+		if (i <= j){
+			int temp = a[i];
+			a[i] = a[j];
+			a[j] = temp;
+			i++;
+			j--;
+		}
+	}
+	if (i < r){
+		quickSort(a, i, r);
+	}
+	if (l < j){
+		quickSort(a, l, j);
+	}
 }
-
-int partion(int *a, int l, int h) {
-    int i = l - 1;
-
-    for (int j = l; j < h; j++) {
-        if (a[j] < a[h]) {
-            i++;
-            swap(a+i, a+j);
-        }
-    }
-
-    swap(a+i+1, a+h);
-    return i++;
-}
-
-void quickSort(int *a, int l, int h) {
-    if (l < h) {
-        int pi = partion(a, l, h);
-        quickSort(a, l, pi - 1);
-        quickSort(a, pi + 1, h);
-    }
-}
-
 void cinArray(int *a, int n) {
     for (int i = 0; i < n; i++)
         scanf("%d", &a[i]);
 }
 
 int minNumber(int a, int b) {
-    if (a < b)
+    if (a <= b)
         return a;
     else
         return b;
@@ -44,15 +40,6 @@ int minNumber(int a, int b) {
 
 int absNumber(int a, int b) {
     return abs(a-b);
-}
-
-void solve(int *a, int n) {
-    int min = abs(a[0] - a[1]);
-
-    for (int i = 0; i < n - 1; i++) 
-        min = minNumber(min, absNumber(a[i], a[i+1]));
-
-    printf("%d", min);
 }
 
 int main() {
@@ -64,7 +51,12 @@ int main() {
 
     quickSort(a, 0, n - 1);
 
-    solve(a, n);
+    int min = 999999999;
+
+    for (int i = 0; i < n; i++) 
+        min = minNumber(min, absNumber(a[i], a[i+1]));
+
+    printf("%d", min);
 
     return 0;
 }
